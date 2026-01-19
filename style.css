@@ -26,7 +26,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    overflow-y: auto;
     background-image: linear-gradient(rgba(26, 11, 46, 0.8), rgba(26, 11, 46, 0.8)), url('invitation_bg.png');
     background-size: cover;
     background-position: center;
@@ -281,6 +281,67 @@ body {
     text-transform: uppercase;
     letter-spacing: 1px;
     color: var(--primary-gold);
+}
+
+.welcome-parallel {
+    display: flex;
+    gap: 2rem;
+    margin: 2rem 0;
+    align-items: center;
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 1.5rem 0;
+    width: 100%;
+}
+
+.welcome-name {
+    flex: 1;
+    text-align: right;
+    font-size: 1.2rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.welcome-name span {
+    color: var(--primary-gold);
+    font-weight: 600;
+}
+
+.welcome-divider {
+    width: 1px;
+    height: 50px;
+    background: var(--glass-border);
+}
+
+.welcome-message {
+    flex: 1;
+    text-align: left;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+@media (max-width: 480px) {
+    .welcome-parallel {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+        padding: 1rem 0;
+    }
+
+    .welcome-name {
+        text-align: center;
+        font-size: 1.1rem;
+    }
+
+    .welcome-divider {
+        width: 40px;
+        height: 1px;
+    }
+
+    .welcome-message {
+        text-align: center;
+        font-size: 0.85rem;
+    }
 }
 
 .ticket-value {

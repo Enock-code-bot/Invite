@@ -3,7 +3,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const db = require('./database');
-const nodemailer = require('nodemailer');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -40,9 +39,6 @@ app.post('/api/rsvp/accept', (req, res) => {
             return res.status(500).json({ error: err.message });
         }
 
-        if (email) {
-            sendConfirmationEmail(email, name, invitation_id).catch(console.error);
-        }
 
         res.json({ message: "RSVP Accepted", id: this.lastID });
     });
@@ -127,68 +123,6 @@ app.get('/api/admin/export', (req, res) => {
     });
 });
 
-// Email sending function
-async function sendConfirmationEmail(guestEmail, guestName, invitationId) {
-    // Fetch invitation details for the email content
-    db.get("SELECT * FROM invitations WHERE id = ?", [invitationId], async (err, invite) => {
-        if (err || !invite) return;
-
-        // Configure Nodemailer (using ethereal.email for testing if no env vars)
-        let transporter;
-        try {
-            if (process.env.SMTP_HOST && process.env.SMTP_HOST !== 'smtp.example.com') {
-                transporter = nodemailer.createTransport({
-                    host: process.env.SMTP_HOST,
-                    port: process.env.SMTP_PORT,
-                    secure: process.env.SMTP_SECURE === 'true',
-                    auth: {
-                        user: process.env.SMTP_USER,
-                        pass: process.env.SMTP_PASS,
-                    },
-                });
-            } else {
-                throw new Error("No real SMTP config");
-            }
-        } catch (e) {
-            // Fallback to temporary test account
-            let testAccount = await nodemailer.createTestAccount();
-            transporter = nodemailer.createTransport({
-                host: "smtp.ethereal.email",
-                port: 587,
-                secure: false,
-                auth: {
-                    user: testAccount.user,
-                    pass: testAccount.pass,
-                },
-            });
-            console.log(`Test email account created: ${testAccount.user}`);
-        }
-
-        const mailOptions = {
-            from: '"Elysium Privé" <noreply@elysiumprive.com>',
-            to: guestEmail,
-            subject: `Invitation Confirmation – ${invite.event_name}`,
-            html: `
-                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
-                    <h2 style="color: #333;">Thank you, ${guestName}!</h2>
-                    <p>Your RSVP for <strong>${invite.event_name}</strong> has been confirmed.</p>
-                    <hr>
-                    <p><strong>When:</strong> ${invite.event_date} at ${invite.event_time}</p>
-                    <p><strong>Where:</strong> ${invite.event_location}</p>
-                    <p><strong>Status:</strong> RSVP Accepted</p>
-                    <hr>
-                    <p>We look forward to seeing you there!</p>
-                </div>
-            `,
-        };
-
-        let info = await transporter.sendMail(mailOptions);
-        console.log("Message sent: %s", info.messageId);
-        if (!process.env.SMTP_HOST) {
-            console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-        }
-    });
-}
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
