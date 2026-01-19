@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Invitation | Private Event</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+
+<body>
+    <div class="invite-card">
+        <span class="logo">Elysium Privé</span>
+
+        <h1 class="tagline">You have been <span>personally</span> invited.</h1>
+
+        <div class="ornament"></div>
+
+        <p class="message">
+            We requests the pleasure of your company for an evening of refined elegance and shared celebration. This is
+            an exclusive gathering for select individuals.
+        </p>
+
+        <div class="event-details">
+            <div class="detail-item">
+                <span class="label">When</span>
+                <span class="value">January 24, 2026</span>
+            </div>
+            <div class="detail-item">
+                <span class="label">Where</span>
+                <span class="value">Kinyinya Avenue</span>
+            </div>
+            <div class="detail-item">
+                <span class="label">RSVP</span>
+                <span class="value">+250 793 442 608</span>
+            </div>
+        </div>
+
+        <div class="actions" id="actionButtons">
+            <button class="btn btn-accept" id="acceptBtn">Accept Invitation</button>
+            <button class="btn btn-decline" id="declineBtn">Decline</button>
+        </div>
+
+        <!-- Accept Form -->
+        <div class="form-container" id="acceptForm">
+            <h2 class="form-title">Confirm Attendance</h2>
+            <form id="rsvpAcceptForm">
+                <div class="form-group">
+                    <input type="text" id="guestName" placeholder="Full Name" required>
+                </div>
+                <button type="submit" class="btn btn-accept">Submit RSVP</button>
+                <button type="button" class="btn btn-back" id="backToActions1">Back</button>
+            </form>
+        </div>
+
+        <!-- Decline Form -->
+        <div class="form-container" id="declineForm">
+            <h2 class="form-title">We'll Miss You</h2>
+            <form id="rsvpDeclineForm">
+                <div class="form-group">
+                    <input type="text" id="declineGuestName" placeholder="Full Name" required>
+                </div>
+                <button type="submit" class="btn btn-decline">Submit Decline</button>
+                <button type="button" class="btn btn-back" id="backToActions2">Back</button>
+            </form>
+        </div>
+
+        <div class="success-screen" id="successScreen">
+            <h2 class="tagline">RSVP <span>Confirmed</span></h2>
+
+            <div class="welcome-parallel"
+                style="display: flex; gap: 2rem; margin: 2rem 0; align-items: center; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); padding: 1.5rem 0;">
+                <div style="flex: 1; text-align: right; font-size: 1.2rem; font-family: 'Playfair Display', serif;">
+                    Welcome, <br><span id="confirmGuestName"
+                        style="color: var(--primary-gold); font-weight: 600;"></span>
+                </div>
+                <div style="width: 1px; height: 50px; background: var(--glass-border);"></div>
+                <div style="flex: 1; text-align: left; font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">
+                    We are truly honored to have you join us for this exclusive evening.
+                </div>
+            </div>
+
+            <!-- Hidden details used by the download script -->
+            <div id="confirmWhen" style="display: none;"></div>
+            <div id="confirmWhere" style="display: none;"></div>
+
+            <button class="btn btn-accept btn-small" id="downloadTicket">Download Invitation</button>
+        </div>
+
+        <div class="decline-screen" id="declineScreen">
+            <h2 class="tagline">Farewell.</h2>
+            <p class="message">Thank you for letting us know. You will be missed.</p>
+        </div>
+    </div>
+
+    <!-- Digital Invitation Template (Hidden) -->
+    <div id="digitalInvitation" class="digital-ticket-template">
+        <div class="ticket-bg"></div>
+        <div class="ticket-content">
+            <img src="gold_seal.png" class="ticket-seal" alt="Gold Seal">
+            <span class="ticket-brand">Elysium Privé</span>
+            <div class="ticket-divider"></div>
+            <h1 class="ticket-title">Invitation Confirmed</h1>
+            <div class="guest-name-display" id="ticketGuestName">Guest Name</div>
+            <div class="ticket-event-info">
+                <div class="info-group">
+                    <span class="info-label">Event</span>
+                    <span class="info-value" id="ticketEventName">Exclusive Gathering</span>
+                </div>
+                <div class="info-group">
+                    <span class="info-label">When</span>
+                    <span class="info-value" id="ticketWhen">January 24, 2026</span>
+                </div>
+                <div class="info-group">
+                    <span class="info-label">Where</span>
+                    <span class="info-value" id="ticketWhere">Kinyinya Avenue</span>
+                </div>
+            </div>
+            <div class="ticket-footer">
+                <p>Present this digital invitation at the entrance.</p>
+                <div class="ornament"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>

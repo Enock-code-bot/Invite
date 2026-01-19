@@ -1,0 +1,7 @@
+node_modules/
+.env
+rsvp.db
+*.log
+*.png
+!invitation_bg.png
+!gold_seal.png

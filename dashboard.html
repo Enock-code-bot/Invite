@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Host Dashboard | RSVP Management</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="brand">
+                <span class="logo">Elysium Privé</span>
+                <h1>Host Dashboard</h1>
+            </div>
+            <div class="header-actions">
+                <button id="exportBtn" class="btn btn-primary">Export CSV</button>
+                <a href="index.html" class="link-back">View Invite</a>
+            </div>
+        </header>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <h3>Total RSVPs</h3>
+                <p id="totalRSVPs">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Accepted</h3>
+                <p id="totalAccepted" class="text-success">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Declined</h3>
+                <p id="totalDeclined" class="text-danger">0</p>
+            </div>
+        </section>
+
+        <section class="table-container">
+            <div class="table-header">
+                <h2>Guest List</h2>
+                <div class="table-filters">
+                    <input type="text" id="guestSearch" placeholder="Search guests...">
+                </div>
+            </div>
+            <div class="scroll-wrapper">
+                <table id="responsesTable">
+                    <thead>
+                        <tr>
+                            <th>Guest</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="responsesBody">
+                        <!-- Data will be injected here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+
+</html>
