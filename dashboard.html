@@ -12,7 +12,23 @@
 </head>
 
 <body>
-    <div class="dashboard-container">
+    <!-- Password Protection Modal -->
+    <div id="passwordModal" class="password-modal">
+        <div class="password-modal-content">
+            <div class="password-header">
+                <span class="logo">Elysium Privé</span>
+                <h2>Host Access</h2>
+                <p>Please enter the host password to continue</p>
+            </div>
+            <form id="passwordForm">
+                <input type="password" id="passwordInput" placeholder="Enter password" required autocomplete="off">
+                <p id="passwordError" class="password-error"></p>
+                <button type="submit" class="btn btn-primary">Unlock Dashboard</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="dashboard-container" style="display: none;">
         <header class="dashboard-header">
             <div class="brand">
                 <span class="logo">Elysium Privé</span>

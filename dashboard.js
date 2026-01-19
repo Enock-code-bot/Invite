@@ -11,6 +11,63 @@ const totalDeclined = document.getElementById('totalDeclined');
 const guestSearch = document.getElementById('guestSearch');
 const exportBtn = document.getElementById('exportBtn');
 
+// Password Protection
+const passwordModal = document.getElementById('passwordModal');
+const passwordForm = document.getElementById('passwordForm');
+const passwordInput = document.getElementById('passwordInput');
+const passwordError = document.getElementById('passwordError');
+const dashboardContainer = document.querySelector('.dashboard-container');
+
+// Check authentication on page load
+function checkAuth() {
+    const isAuthenticated = sessionStorage.getItem('hostAuthenticated');
+    if (isAuthenticated === 'true') {
+        showDashboard();
+    }
+}
+
+// Verify password
+async function verifyPassword(password) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/admin/verify-password`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+            sessionStorage.setItem('hostAuthenticated', 'true');
+            showDashboard();
+        } else {
+            passwordError.textContent = 'Incorrect password. Please try again.';
+            passwordInput.value = '';
+            passwordInput.focus();
+        }
+    } catch (error) {
+        console.error('Authentication error:', error);
+        passwordError.textContent = 'Server error. Please try again.';
+    }
+}
+
+// Show dashboard and hide modal
+function showDashboard() {
+    passwordModal.style.display = 'none';
+    dashboardContainer.style.display = 'block';
+    init();
+}
+
+// Password form submission
+passwordForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    passwordError.textContent = '';
+    const password = passwordInput.value.trim();
+    if (password) {
+        verifyPassword(password);
+    }
+});
+
 // Initialize
 async function init() {
     await fetchResponses();
@@ -105,4 +162,4 @@ function filterResponses(query) {
     renderTable(filtered);
 }
 
-init();
+checkAuth();

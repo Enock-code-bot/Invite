@@ -124,6 +124,24 @@ app.get('/api/admin/export', (req, res) => {
 });
 
 
+// POST /api/admin/verify-password - Verify host dashboard password
+app.post('/api/admin/verify-password', (req, res) => {
+    const { password } = req.body;
+
+    if (!password) {
+        return res.status(400).json({ error: "Password is required" });
+    }
+
+    const correctPassword = process.env.HOST_PASSWORD || 'Enock@0912';
+
+    if (password === correctPassword) {
+        res.json({ success: true, message: "Authentication successful" });
+    } else {
+        res.status(401).json({ success: false, error: "Incorrect password" });
+    }
+});
+
+
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
