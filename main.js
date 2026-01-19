@@ -163,4 +163,34 @@ document.addEventListener('mousemove', (e) => {
     card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
 });
 
+// Sidebar Controls
+const hostSidebar = document.getElementById('hostSidebar');
+const openSidebarBtn = document.getElementById('openSidebar');
+const closeSidebarBtn = document.getElementById('closeSidebar');
+
+if (openSidebarBtn && hostSidebar) {
+    openSidebarBtn.addEventListener('click', () => {
+        hostSidebar.classList.add('active');
+        openSidebarBtn.style.opacity = '0';
+    });
+}
+
+if (closeSidebarBtn && hostSidebar) {
+    closeSidebarBtn.addEventListener('click', () => {
+        hostSidebar.classList.add('active');
+        hostSidebar.classList.remove('active');
+        if (openSidebarBtn) openSidebarBtn.style.opacity = '0.6';
+    });
+}
+
+// Close sidebar on outside click
+document.addEventListener('click', (e) => {
+    if (hostSidebar && hostSidebar.classList.contains('active')) {
+        if (!hostSidebar.contains(e.target) && e.target !== openSidebarBtn) {
+            hostSidebar.classList.remove('active');
+            if (openSidebarBtn) openSidebarBtn.style.opacity = '0.6';
+        }
+    }
+});
+
 init();
