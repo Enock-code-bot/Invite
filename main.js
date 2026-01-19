@@ -1,5 +1,5 @@
 // Configuration
-const API_BASE_URL = 'http://localhost:3000/api';
+const API_BASE_URL = '/api';
 const TOKEN = 'test-event-2026'; // Hardcoded for this demo, usually from URL
 
 let invitationData = null;
